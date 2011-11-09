@@ -19,6 +19,8 @@ module Survivor
       def display game
         curses do
           clear
+          setpos -game.character.y, game.character.x
+          addch '@'
           refresh
         end
       end
