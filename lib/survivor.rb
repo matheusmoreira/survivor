@@ -1,5 +1,4 @@
 require 'survivor/game'
-require 'survivor/version'
 
 module Survivor
 

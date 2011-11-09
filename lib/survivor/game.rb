@@ -4,7 +4,12 @@ module Survivor
   module Game
 
     def self.run
-      # launch game
+      UI.run do |ui|
+        loop do
+          ui.display self
+          key = ui.input
+        end
+      end
     end
 
   end
