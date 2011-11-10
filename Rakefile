@@ -27,6 +27,10 @@ namespace :gem do
     sh "gem install #{gem_file}"
   end
 
+  task :uninstall do
+    sh "gem uninstall #{spec.name}"
+  end
+
   task :clean do
     FileUtils.rm_rf gem_dir
   end
