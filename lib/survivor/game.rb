@@ -11,7 +11,7 @@ module Survivor
 
     def self.run
       @character = Character.new
-      @map = Map.new(24, 80) { [ ' ', '#', '%', "\n" ].sample }
+      @map = Map.new(24, 80) { [ ' ', '#', '%' ].sample }
       game_loop
     end
 
