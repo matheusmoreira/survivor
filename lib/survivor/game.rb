@@ -1,4 +1,4 @@
-require 'survivor/character'
+require 'survivor/game/character'
 require 'survivor/game/map'
 require 'survivor/ui'
 
