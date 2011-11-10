@@ -1,35 +1,44 @@
+require 'survivor/game/map/coordinates'
+
 module Survivor
   class Character
 
-    attr_accessor :x, :y
+    attr_accessor :coordinates
 
     def initialize
-      @x = @y = 0
+      self.coordinates = Survivor::Game::Map::Coordinates.new
+    end
+
+    def x= value
+      self.coordinates = Survivor::Game::Map::Coordinates.new value, y
+    end
+
+    def y= value
+      self.coordinates = Survivor::Game::Map::Coordinates.new x, value
+    end
+
+    def x
+      coordinates.x
+    end
+
+    def y
+      coordinates.y
     end
 
     def move_up
-      @y += 1
+      self.y += 1
     end
 
     def move_down
-      @y -= 1
+      self.y -= 1
     end
 
     def move_left
-      @x -= 1
+      self.x -= 1
     end
 
     def move_right
-      @x += 1
-    end
-
-    def act_on key
-      case key
-        when :up    then move_up
-        when :down  then move_down
-        when :left  then move_left
-        when :right then move_right
-      end
+      self.x += 1
     end
 
   end

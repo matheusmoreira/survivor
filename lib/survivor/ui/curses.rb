@@ -17,12 +17,10 @@ module Survivor
       end
 
       def display game
-        curses do
-          clear
-          setpos -game.character.y, game.character.x
-          addch '@'
-          refresh
-        end
+        curses.clear
+        draw_map game.map
+        draw_character game.character
+        curses.refresh
       end
 
       def input
@@ -48,6 +46,23 @@ module Survivor
 
       def curses &block
         ::Curses.tap { |curses| curses.instance_eval &block if block }
+      end
+
+      def write string, line, column
+        curses do
+          setpos line, column
+          addstr string.to_s
+        end
+      end
+
+      def draw_map map
+        map.each_with_coordinates do |tile, (line, column)|
+          write tile, line, column
+        end
+      end
+
+      def draw_character character
+        write '@', -character.y, character.x
       end
 
     end
