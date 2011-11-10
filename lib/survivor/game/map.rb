@@ -8,8 +8,8 @@ module Survivor
 
       def initialize lines, columns, obj = nil
         @map = Hash.new obj
-        0.upto(lines) do |x|
-          0.upto(columns) do |y|
+        0.upto(lines.abs) do |x|
+          0.upto(columns.abs) do |y|
             coordinates = Coordinates[x, y]
             @map[coordinates] = yield coordinates
           end
