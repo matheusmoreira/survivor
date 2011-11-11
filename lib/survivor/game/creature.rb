@@ -30,8 +30,9 @@ module Survivor
 
       def move dx, dy
         tap do |c|
-          c.x += dx
-          c.y += dy
+          coordinates = Map::Coordinates[dx + c.x, dy + c.y]
+          tile = c.game.map[coordinates]
+          c.coordinates = coordinates if tile and tile.passable?
         end
       end
 
