@@ -34,8 +34,6 @@ module Survivor
         end
       end
 
-      alias :each_with_index :each_with_coordinates
-
       def area_around character
         cx, cy = *character.coordinates
         #
