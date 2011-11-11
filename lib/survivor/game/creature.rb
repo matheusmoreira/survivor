@@ -5,6 +5,7 @@ module Survivor
     class Creature
 
       attr_accessor :coordinates
+      attr_reader   :game
 
       def initialize game
         @game = game
@@ -51,7 +52,7 @@ module Survivor
       end
 
       def surroundings
-        @game.map.area_around self
+        game.map.area_around self
       end
 
     end
