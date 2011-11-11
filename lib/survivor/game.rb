@@ -1,5 +1,6 @@
 require 'survivor/game/character'
 require 'survivor/game/map'
+require 'survivor/game/map/tile'
 require 'survivor/ui'
 
 module Survivor
@@ -9,7 +10,9 @@ module Survivor
 
     def initialize
       @character = Character.new self
-      @map = Map.new(24, 80) { [ ' ', '#', '%' ].sample }
+      @map = Map.new(24, 80) do
+        [ Map::Tile.new(' '), Map::Tile.new('#', false) ].sample
+      end
     end
 
     def run
