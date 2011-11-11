@@ -6,7 +6,9 @@ module Survivor
 
       include Enumerable
 
-      def initialize lines = 0, columns = 0, obj = nil
+      attr_accessor :starting_point
+
+      def initialize lines = 0, columns = 0, obj = nil, options = {}
         @map = Hash.new obj
         0.upto(lines.abs) do |y|
           0.upto(columns.abs) do |x|
@@ -14,6 +16,7 @@ module Survivor
             @map[coordinates] = yield coordinates
           end
         end if block_given?
+        @starting_point = options.fetch :starting_point, Coordinates[0, 0]
       end
 
       def [] coordinates
