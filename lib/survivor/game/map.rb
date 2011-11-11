@@ -6,7 +6,7 @@ module Survivor
 
       include Enumerable
 
-      def initialize lines, columns, obj = nil
+      def initialize lines = 0, columns = 0, obj = nil
         @map = Hash.new obj
         0.upto(lines.abs) do |y|
           0.upto(columns.abs) do |x|
