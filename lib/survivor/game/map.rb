@@ -20,6 +20,10 @@ module Survivor
         @map[coordinates]
       end
 
+      def []= coordinates, value
+        @map[coordinates] = value
+      end
+
       def each
         @map.each_key { |coordinates| yield @map[coordinates] }
       end
