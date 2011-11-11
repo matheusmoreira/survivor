@@ -56,7 +56,7 @@ module Survivor
       end
 
       def draw_map map
-        map.each_with_coordinates do |tile, (line, column)|
+        map.each_with_coordinates do |tile, (column, line)|
           write tile, line, column
         end
       end
