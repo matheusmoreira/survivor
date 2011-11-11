@@ -57,12 +57,16 @@ module Survivor
 
       def draw_map map
         map.each_with_coordinates do |tile, (column, line)|
-          write tile, line, column
+          write tile, normalized(line), column
         end
       end
 
       def draw_character character
-        write '@', -character.y, character.x
+        write '@', normalized(character.y), character.x
+      end
+
+      def normalized line
+        curses.lines - line - 1
       end
 
     end
