@@ -9,15 +9,15 @@ module Survivor
 
       def initialize game
         @game = game
-        self.coordinates = Survivor::Game::Map::Coordinates.new
+        self.coordinates = Map::Coordinates.new
       end
 
       def x= value
-        self.coordinates = Survivor::Game::Map::Coordinates.new value, y
+        self.coordinates = Map::Coordinates[value, y]
       end
 
       def y= value
-        self.coordinates = Survivor::Game::Map::Coordinates.new x, value
+        self.coordinates = Map::Coordinates[x, value]
       end
 
       def x
