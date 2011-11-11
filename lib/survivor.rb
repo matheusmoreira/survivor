@@ -3,7 +3,7 @@ require 'survivor/game'
 module Survivor
 
   def self.run(argv)
-    Survivor::Game.run
+    Survivor::Game.new.run
   end
 
 end

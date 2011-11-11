@@ -3,21 +3,22 @@ require 'survivor/game/map'
 require 'survivor/ui'
 
 module Survivor
-  module Game
+  class Game
 
-    class << self
-      attr_reader :character, :map
+    attr_reader :character, :map
+
+    def initialize
+      @character = Character.new self
+      @map = Map.new(24, 80) { [ ' ', '#', '%' ].sample }
     end
 
-    def self.run
-      @character = Character.new
-      @map = Map.new(24, 80) { [ ' ', '#', '%' ].sample }
+    def run
       game_loop
     end
 
     private
 
-    def self.game_loop
+    def game_loop
       UI.run do |ui|
         loop do
           ui.display self
@@ -26,7 +27,7 @@ module Survivor
       end
     end
 
-    def self.handle input
+    def handle input
       case input
         when :q     then exit
         when :up    then character.move_up

@@ -1,5 +1,5 @@
 module Survivor
-  module Game
+  class Game
     class Map
       class Coordinates
 

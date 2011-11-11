@@ -1,12 +1,13 @@
 require 'survivor/game/map/coordinates'
 
 module Survivor
-  module Game
+  class Game
     class Character
 
       attr_accessor :coordinates
 
-      def initialize
+      def initialize game
+        @game = game
         self.coordinates = Survivor::Game::Map::Coordinates.new
       end
 

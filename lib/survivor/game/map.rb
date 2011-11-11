@@ -1,7 +1,7 @@
 require 'survivor/game/map/coordinates'
 
 module Survivor
-  module Game
+  class Game
     class Map
 
       include Enumerable
