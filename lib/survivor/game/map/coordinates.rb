@@ -28,7 +28,8 @@ module Survivor
           [x, y]
         end
 
-        alias :to_ary :to_a
+        alias :to_ary   :to_a
+        alias :to_array :to_a
 
         def to_s
           "(#{x}, #{y})"
