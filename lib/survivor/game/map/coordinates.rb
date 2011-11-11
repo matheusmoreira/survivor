@@ -20,6 +20,10 @@ module Survivor
         alias :eql? :==
         alias :===  :==
 
+        def hash
+          to_a.hash
+        end
+
         def to_a
           [x, y]
         end
