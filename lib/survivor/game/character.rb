@@ -43,6 +43,10 @@ module Survivor
         self.x += 1
       end
 
+      def surroundings
+        @game.map.area_around self
+      end
+
     end
   end
 end

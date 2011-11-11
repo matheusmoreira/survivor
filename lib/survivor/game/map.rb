@@ -36,6 +36,23 @@ module Survivor
 
       alias :each_with_index :each_with_coordinates
 
+      def area_around character
+        cx, cy = *character.coordinates
+        #
+        # (cx - 1, cy + 1) (cx, cy + 1) (cx + 1, cy + 1)
+        # (cx - 1, cy)       (cx, cy)   (cx + 1, cy)
+        # (cx - 1, cy - 1) (cx, cy - 1) (cx + 1, cy - 1)
+        #
+        Map.new.tap do |map|
+          -1.upto(1) do |x|
+            -1.upto(1) do |y|
+              coordinates = Coordinates[cx + x, cy + y]
+              map[coordinates] = @map[coordinates]
+            end
+          end
+        end
+      end
+
     end
   end
 end
