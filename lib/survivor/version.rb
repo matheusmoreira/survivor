@@ -12,5 +12,9 @@ module Survivor
       STRING == string
     end
 
+    def self.to_s
+      STRING
+    end
+
   end
 end
