@@ -25,8 +25,11 @@ module Survivor
           [@char, @passable].hash
         end
 
-        alias :to_s    :char
-        alias :inspect :to_s
+        alias :to_s :char
+
+        def inspect
+          "['#{char}' #{passable?}]"
+        end
 
       end
     end
