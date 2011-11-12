@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
 
 require 'survivor'
+require 'survivor/options'
 
-Survivor.run ARGV
+options = Survivor::Options.parse!
+
+Survivor.run options
