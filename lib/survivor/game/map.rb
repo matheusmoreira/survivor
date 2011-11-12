@@ -32,7 +32,7 @@ module Survivor
       end
 
       def each_tile
-        each { |coordinates| yield @map[coordinates] }
+        @map.each_value { |tile| yield tile }
       end
 
       def each_with_coordinates
