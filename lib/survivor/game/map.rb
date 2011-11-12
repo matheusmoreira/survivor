@@ -43,6 +43,24 @@ module Survivor
         @map.each { |coordinates, tile| yield tile, coordinates }
       end
 
+      def lines
+        (Hash.new { |hash, key| hash[key] = Array.new }).tap do |lines|
+          group_by { |coordinate| coordinate.y }.each do |line_number, coordinates|
+            coordinates.each do |coordinate|
+              lines[line_number] << @map[coordinate]
+            end
+          end
+        end
+      end
+
+      def each_line
+        lines.tap do |lines|
+          lines.keys.each do |line_number|
+            yield lines[line_number]
+          end
+        end
+      end
+
       def area_around character
         cx, cy = *character.coordinates
         #
