@@ -64,7 +64,7 @@ module Survivor
 
       def each_line_string
         each_line do |line|
-          yield line.map(&:char).join
+          yield line.map(&:to_s).join
         end
       end
 
