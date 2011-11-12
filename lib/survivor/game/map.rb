@@ -36,11 +36,7 @@ module Survivor
       end
 
       def each_with_coordinates
-        each do |coordinates|
-          each_tile do |tile|
-            yield tile, coordinates
-          end
-        end
+        @map.each { |coordinates, tile| yield tile, coordinates }
       end
 
       def area_around character
