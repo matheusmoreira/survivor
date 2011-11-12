@@ -27,6 +27,10 @@ module Survivor
         @map[coordinates] = value
       end
 
+      def tiles
+        @map.values
+      end
+
       def each
         @map.each_key { |coordinates| yield coordinates }
       end
