@@ -14,6 +14,17 @@ module Survivor
           @passable
         end
 
+        def == tile
+          self.char == tile.char and self.passable? == tile.passable?
+        end
+
+        alias :eql? :==
+        alias :===  :==
+
+        def hash
+          [@char, @passable].hash
+        end
+
         alias :to_s    :char
         alias :inspect :to_s
 
