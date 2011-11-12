@@ -68,11 +68,8 @@ module Survivor
                   end
                 end
                 (map_hash['data'] = '').tap do |data|
-                  map.each_line do |line|
-                    line.each do |tile|
-                      data << tile.char
-                    end
-                    data << "\n"
+                  map.each_line_string do |line|
+                    data << "#{line}\n"
                   end
                 end
               end
