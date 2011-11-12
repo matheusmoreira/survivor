@@ -28,12 +28,18 @@ module Survivor
       end
 
       def each
-        @map.each_key { |coordinates| yield @map[coordinates] }
+        @map.each_key { |coordinates| yield coordinates }
+      end
+
+      def each_tile
+        each { |coordinates| yield @map[coordinates] }
       end
 
       def each_with_coordinates
-        @map.each_key do |coordinates|
-          yield @map[coordinates], coordinates
+        each do |coordinates|
+          each_tile do |tile|
+            yield tile, coordinates
+          end
         end
       end
 
