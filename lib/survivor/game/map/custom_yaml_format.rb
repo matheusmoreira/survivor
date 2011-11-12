@@ -46,7 +46,6 @@ module Survivor
             end
             start = map_hash['starting point']
             x, y = start['x'].to_i, start['y'].to_i
-            puts "(#{x}, #{y})"
             map.starting_point = Coordinates[x, y]
           end
         end
