@@ -1,8 +1,9 @@
 require 'survivor/game'
+require 'survivor/options'
 
 module Survivor
 
-  def self.run options = {}
+  def self.run options = Options.new
     Survivor::Game.new.run
   end
 
