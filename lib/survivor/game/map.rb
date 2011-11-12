@@ -1,4 +1,5 @@
 require 'survivor/game/map/coordinates'
+require 'survivor/game/map/custom_yaml_format'
 
 module Survivor
   class Game
@@ -76,6 +77,14 @@ module Survivor
             end
           end
         end
+      end
+
+      def self.load filename
+        CustomYamlFormat.from_file filename
+      end
+
+      def save filename
+        CustomYamlFormat.save self, filename
       end
 
     end
