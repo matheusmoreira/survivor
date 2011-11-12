@@ -2,7 +2,9 @@
 
 require 'survivor'
 require 'survivor/options'
+require 'survivor/options/parser'
 
-options = Survivor::Options.parse!
+options = Survivor::Options.new
+Survivor::Options::Parser.new(options).parse!
 
 Survivor.run options
