@@ -5,10 +5,10 @@ module Survivor
       @options = options
     end
 
-    boolean_options = [ :development_mode ]
+    BOOLEAN_OPTIONS = [ :development_mode ].freeze
 
     { :enable => true, :disable => false }.each_pair do |set, state|
-      boolean_options.each do |boolean_option|
+      BOOLEAN_OPTIONS.each do |boolean_option|
 
         define_method("#{set}_#{boolean_option}".to_sym) do
           @options[boolean_option] = state
