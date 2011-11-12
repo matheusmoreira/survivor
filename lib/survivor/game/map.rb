@@ -62,6 +62,12 @@ module Survivor
         end
       end
 
+      def each_line_string
+        each_line do |line|
+          yield line.map(&:char).join
+        end
+      end
+
       def area_around character
         cx, cy = *character.coordinates
         #
