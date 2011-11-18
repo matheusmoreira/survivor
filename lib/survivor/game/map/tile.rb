@@ -14,15 +14,22 @@ module Survivor
           @passable
         end
 
+        def to_a
+          [ @char, @color, @passable ]
+        end
+
+        alias :to_ary   :to_a
+        alias :to_array :to_a
+
         def == tile
-          self.char == tile.char and self.passable? == tile.passable?
+          self.to_a == tile.to_a
         end
 
         alias :eql? :==
         alias :===  :==
 
         def hash
-          [@char, @passable].hash
+          self.to_a.hash
         end
 
         alias :to_s :char
