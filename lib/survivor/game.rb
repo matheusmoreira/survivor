@@ -1,4 +1,4 @@
-require 'survivor/game/character'
+require 'survivor/game/creature/character'
 require 'survivor/game/map'
 require 'survivor/game/map/tile'
 require 'survivor/ui'
@@ -10,7 +10,7 @@ module Survivor
 
     def initialize
       @map = Map.load Survivor.map 'test.map.yaml'
-      @character = Character.new(self).tap do |character|
+      @character = Creature::Character.new(self).tap do |character|
         character.coordinates = map.starting_point
       end
     end
