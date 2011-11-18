@@ -31,7 +31,7 @@ module Survivor
       def display game
         curses.clear
         draw_map game.map
-        draw_character game.character
+        draw_creature game.character
         curses.refresh
       end
 
@@ -86,8 +86,8 @@ module Survivor
         end
       end
 
-      def draw_character character
-        write '@', normalized(character.y), character.x, translate_color(character.color)
+      def draw_creature creature
+        write '@', normalized(creature.y), creature.x, translate_color(creature.color)
       end
 
       def normalized line
