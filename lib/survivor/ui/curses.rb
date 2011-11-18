@@ -60,6 +60,14 @@ module Survivor
         @@key_map[curses_key]
       end
 
+      @@color_map = {}
+
+      ::Curses.constants.grep(COLOR_CONSTANT_REGEX).each do |symbol|
+        symbol.to_s.gsub(/^.*_/, '').downcase.to_sym.tap do |color|
+          @@color_map[color] = ::Curses.const_get symbol
+        end
+      end
+
       def write string, line, column
         curses do
           setpos line, column
