@@ -87,7 +87,9 @@ module Survivor
       end
 
       def draw_creature creature
-        write '@', normalized(creature.y), creature.x, translate_color(creature.color)
+        write creature.char,
+              normalized(creature.y), creature.x,
+              translate_color(creature.color)
       end
 
       def normalized line
