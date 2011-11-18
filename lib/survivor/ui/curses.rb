@@ -68,6 +68,10 @@ module Survivor
         end
       end
 
+      def translate_color color
+        ::Curses.color_pair @@color_map[color]
+      end
+
       def write string, line, column
         curses do
           setpos line, column
