@@ -36,10 +36,12 @@ module Survivor
             map_hash['data'].split("\n").tap do |lines|
               lines.each_with_index do |line, y|
                 line.chars.each_with_index do |char, x|
+                  args = []
                   if tile_data = tiles[char]
-                    passable = tile_data['passable']
+                    args << tile_data.fetch('color', :white).to_sym
+                    args << tile_data.fetch('passable', true)
                   end
-                  tile = Tile.new char, passable
+                  tile = Tile.new char, *args
                   map[Coordinates[x, lines.count - y - 1]] = tile
                 end
               end
@@ -62,6 +64,7 @@ module Survivor
                 (map_hash['tiles'] = {}).tap do |tiles|
                   map.tiles.uniq.each do |tile|
                     (tiles[tile.char] = {}).tap do |tile_data|
+                      tile_data['color'] = tile.color.to_s
                       tile_data['passable'] = tile.passable?
                     end
                   end

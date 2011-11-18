@@ -7,8 +7,10 @@ survivor:
       y: 10
     tiles:
       '#':
+        color: red
         passable: no
       ' ':
+        color: white
         passable: yes
 
     data: |
