@@ -72,9 +72,10 @@ module Survivor
         ::Curses.color_pair @@color_map[color]
       end
 
-      def write string, line, column
+      def write string, line, column, color = nil
         curses do
           setpos line, column
+          attron color if color and has_colors?
           addstr string.to_s
         end
       end
