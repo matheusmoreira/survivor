@@ -82,7 +82,9 @@ module Survivor
 
       def draw_map map
         map.each_with_coordinates do |tile, (column, line)|
-          write tile, normalized(line), column
+          write tile,
+                normalized(line), column,
+                translate_color(tile.color)
         end
       end
 
