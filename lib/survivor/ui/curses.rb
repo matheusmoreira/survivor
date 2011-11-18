@@ -87,7 +87,7 @@ module Survivor
       end
 
       def draw_character character
-        write '@', normalized(character.y), character.x
+        write '@', normalized(character.y), character.x, translate_color(character.color)
       end
 
       def normalized line
