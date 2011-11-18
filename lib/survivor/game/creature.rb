@@ -5,10 +5,10 @@ module Survivor
     class Creature
 
       attr_accessor :coordinates
-      attr_reader   :game
+      attr_reader   :game, :char
 
-      def initialize game
-        @game = game
+      def initialize game, char
+        @game, @char = game, char
         self.coordinates = Map::Coordinates.new
       end
 
