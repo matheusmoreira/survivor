@@ -3,11 +3,11 @@ module Survivor
     class Map
       class Tile
 
-        attr_reader :char
+        attr_reader :char, :color
 
-        def initialize string, passable = true
+        def initialize string, color = :white, passable = true
           @char = string.chars.first
-          @passable = passable
+          @color, @passable = color, passable
         end
 
         def passable?
