@@ -6,8 +6,16 @@ module Survivor
 
       def init
         curses do
-          noecho
           init_screen
+          if has_colors?
+            start_color
+            const_get(:COLOR_BLACK).tap do |background_color|
+              constants.grep(/^COLOR_\w+$/i).map { |symbol| const_get symbol }.each do |color|
+                init_pair color, color, background_color
+              end
+            end
+          end
+          noecho
           stdscr.keypad true
         end
       end
