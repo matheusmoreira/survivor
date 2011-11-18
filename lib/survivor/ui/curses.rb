@@ -4,13 +4,17 @@ module Survivor
   module UI
     module Curses
 
+      COLOR_CONSTANT_REGEX = /^COLOR_\w+$/i
+
       def init
         curses do
           init_screen
           if has_colors?
             start_color
             const_get(:COLOR_BLACK).tap do |background_color|
-              constants.grep(/^COLOR_\w+$/i).map { |symbol| const_get symbol }.each do |color|
+              constants.grep(COLOR_CONSTANT_REGEX).map do |symbol|
+                const_get symbol
+              end.each do |color|
                 init_pair color, color, background_color
               end
             end
@@ -37,6 +41,10 @@ module Survivor
 
       private
 
+      def curses &block
+        ::Curses.tap { |curses| curses.instance_eval &block if block }
+      end
+
       @@key_map = {
         ::Curses::Key::UP    => :up,
         ::Curses::Key::DOWN  => :down,
@@ -50,10 +58,6 @@ module Survivor
 
       def translate_key curses_key
         @@key_map[curses_key]
-      end
-
-      def curses &block
-        ::Curses.tap { |curses| curses.instance_eval &block if block }
       end
 
       def write string, line, column
