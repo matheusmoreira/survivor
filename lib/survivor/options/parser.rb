@@ -12,6 +12,10 @@ module Survivor
               options.enable_development_mode
             end
 
+            on '--map MAP', 'Start a game on the given map.' do |map|
+              options.map = map
+            end
+
             on '-h', '--help', 'Display this help screen and exit' do
               puts self
               exit
