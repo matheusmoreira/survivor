@@ -45,4 +45,13 @@ task :run => :setup do
   system 'survivor'
 end
 
+namespace :run do
+
+  task :map, [ :file ] => :setup do |task, args|
+    file = args[:file]
+    system "survivor --map #{file}"
+  end
+
+end
+
 task :default => :run
