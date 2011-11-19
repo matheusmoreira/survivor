@@ -71,7 +71,7 @@ module Survivor
 
       def area_around coordinates, reach = {}
         cx, cy = *coordinates
-        reach.values.map { |value| value.abs if value.respond_to? :abs }
+        reach.merge!(reach) { |key, value| value.abs if value.respond_to? :abs }
         default = +(reach.fetch(:default, 1))
         up      = +(reach.fetch(:up,      default))
         down    = -(reach.fetch(:down,    default))
