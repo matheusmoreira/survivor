@@ -25,5 +25,21 @@ module Survivor
       end
     end
 
+    VALUE_OPTIONS = [ :map ].freeze.tap do |value_options|
+      value_options.each do |value_option|
+
+        define_method(value_option) do |default = nil|
+          @options.fetch(value_option, default)
+        end
+
+        alias :"#{value_option}_with_default" :"#{value_option}"
+
+        define_method("#{value_option}=".to_sym) do |value|
+          @options[value_option] = value
+        end
+
+      end
+    end
+
   end
 end
