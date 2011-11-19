@@ -68,9 +68,14 @@ module Survivor
         end
       end
 
-      def area_around coordinates, n = 1
+      def area_around coordinates, reach = {}
         cx, cy = *coordinates
-        n = n.abs
+        reach.values.map { |value| value.abs if value.respond_to? :abs }
+        default = +(reach.fetch(:default, 1))
+        up      = +(reach.fetch(:up,      default))
+        down    = -(reach.fetch(:down,    default))
+        left    = -(reach.fetch(:left,    default))
+        right   = +(reach.fetch(:right,   default))
         #
         # (cx - n, cy + n) (cx - 1, cy + n) (cx, cy + n) (cx + 1, cy + n) (cx + n, cy + n)
         # (cx - n, cy + 1) (cx - 1, cy + 1) (cx, cy + 1) (cx + 1, cy + 1) (cx + n, cy + 1)
@@ -79,8 +84,8 @@ module Survivor
         # (cx - n, cy - n) (cx - 1, cy - n) (cx, cy - n) (cx + 1, cy - n) (cx + n, cy - n)
         #
         Map.new.tap do |map|
-          (-n).upto(n) do |x|
-            (-n).upto(n) do |y|
+          left.upto(right) do |x|
+            down.upto(up) do |y|
               coordinates = Coordinates[cx + x, cy + y]
               map[coordinates] = @map[coordinates]
             end
