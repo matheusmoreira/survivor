@@ -84,7 +84,7 @@ module Survivor
         # (cx - n, cy - 1) (cx - 1, cy - 1) (cx, cy - 1) (cx + 1, cy - 1) (cx + n, cy - 1)
         # (cx - n, cy - n) (cx - 1, cy - n) (cx, cy - n) (cx + 1, cy - n) (cx + n, cy - n)
         #
-        Map.new.tap do |map|
+        Map.new(:starting_point => coordinates).tap do |map|
           left.upto(right) do |x|
             down.upto(up) do |y|
               coordinates = Coordinates[cx + x, cy + y]
