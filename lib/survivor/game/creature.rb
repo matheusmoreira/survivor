@@ -53,7 +53,7 @@ module Survivor
       end
 
       def surroundings
-        game.map.area_around self
+        game.map.area_around coordinates
       end
 
     end

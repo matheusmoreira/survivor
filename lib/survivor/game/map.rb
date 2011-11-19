@@ -68,8 +68,8 @@ module Survivor
         end
       end
 
-      def area_around character
-        cx, cy = *character.coordinates
+      def area_around coordinates
+        cx, cy = *coordinates
         #
         # (cx - 1, cy + 1) (cx, cy + 1) (cx + 1, cy + 1)
         # (cx - 1, cy)       (cx, cy)   (cx + 1, cy)
