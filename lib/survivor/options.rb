@@ -1,3 +1,6 @@
+require 'survivor'
+require 'pathname'
+
 module Survivor
   class Options
 
@@ -38,6 +41,15 @@ module Survivor
           @options[value_option] = value
         end
 
+      end
+    end
+
+    def map_location(default = 'test.map.yaml')
+      map = map_with_default(default)
+      if Pathname.new(map).relative?
+        File.join(Survivor.maps, map)
+      else
+        map
       end
     end
 
