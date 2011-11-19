@@ -8,8 +8,8 @@ module Survivor
 
     attr_reader :character, :map
 
-    def initialize
-      @map = Map.load Survivor.map 'test.map.yaml'
+    def initialize options
+      @map = Map.load(options.map_location)
       @character = Creature::Character.new(self).tap do |character|
         character.coordinates = map.starting_point
       end

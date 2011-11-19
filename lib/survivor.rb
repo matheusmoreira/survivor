@@ -4,7 +4,7 @@ require 'survivor/options'
 module Survivor
 
   def self.run options = Options.new
-    Survivor::Game.new.run
+    Survivor::Game.new(options).run
   end
 
   def self.root
