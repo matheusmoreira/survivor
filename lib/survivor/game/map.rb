@@ -86,6 +86,8 @@ module Survivor
       end
 
       def self.load filename
+        raise filename.prepend("Map not found - ") unless File.file? filename
+        raise filename.prepend("Map not readable - ") unless File.readable? filename
         CustomYamlFormat.from_file filename
       end
 
