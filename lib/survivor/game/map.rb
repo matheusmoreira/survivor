@@ -68,16 +68,19 @@ module Survivor
         end
       end
 
-      def area_around coordinates
+      def area_around coordinates, n = 1
         cx, cy = *coordinates
+        n = n.abs
         #
-        # (cx - 1, cy + 1) (cx, cy + 1) (cx + 1, cy + 1)
-        # (cx - 1, cy)       (cx, cy)   (cx + 1, cy)
-        # (cx - 1, cy - 1) (cx, cy - 1) (cx + 1, cy - 1)
+        # (cx - n, cy + n) (cx - 1, cy + n) (cx, cy + n) (cx + 1, cy + n) (cx + n, cy + n)
+        # (cx - n, cy + 1) (cx - 1, cy + 1) (cx, cy + 1) (cx + 1, cy + 1) (cx + n, cy + 1)
+        # (cx - n, cy)     (cx - 1, cy)     (cx, cy)     (cx + 1, cy)     (cx + n, cy)
+        # (cx - n, cy - 1) (cx - 1, cy - 1) (cx, cy - 1) (cx + 1, cy - 1) (cx + n, cy - 1)
+        # (cx - n, cy - n) (cx - 1, cy - n) (cx, cy - n) (cx + 1, cy - n) (cx + n, cy - n)
         #
         Map.new.tap do |map|
-          -1.upto(1) do |x|
-            -1.upto(1) do |y|
+          (-n).upto(n) do |x|
+            (-n).upto(n) do |y|
               coordinates = Coordinates[cx + x, cy + y]
               map[coordinates] = @map[coordinates]
             end
