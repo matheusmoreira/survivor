@@ -84,14 +84,14 @@ module Survivor
         map.each_with_coordinates do |tile, (column, line)|
           write tile,
                 normalized(line), column,
-                translate_color(tile.color)
+                translate_color(tile.color) if tile
         end
       end
 
       def draw_creature creature
         write creature.char,
               normalized(creature.y), creature.x,
-              translate_color(creature.color)
+              translate_color(creature.color) if creature
       end
 
       def normalized line
