@@ -93,6 +93,12 @@ module Survivor
         end
       end
 
+      { :above => :up, :below => :down, :left => :left, :right => :right }.each do |synonym, direction|
+        define_method(synonym) do |coordinates|
+          area_around coordinates, direction => 1, :default => 0
+        end
+      end
+
       def self.load filename
         raise filename.prepend("Map not found - ") unless File.file? filename
         raise filename.prepend("Map not readable - ") unless File.readable? filename
