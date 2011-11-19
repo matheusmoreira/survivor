@@ -9,15 +9,16 @@ module Survivor
 
       attr_accessor :starting_point
 
-      def initialize lines = 0, columns = 0, obj = nil, options = {}
-        @map = Hash.new obj
-        0.upto(lines.abs) do |y|
-          0.upto(columns.abs) do |x|
+      def initialize options = {}
+        options.merge!(options) { |key, value| value.abs if value.respond_to? :abs }
+        @map = Hash.new(options.fetch(:default_tile, nil))
+        0.upto(options.fetch(:lines, 0)) do |y|
+          0.upto(options.fetch(:columns, 0)) do |x|
             coordinates = Coordinates[x, y]
             @map[coordinates] = yield coordinates
           end
         end if block_given?
-        @starting_point = options.fetch :starting_point, Coordinates[0, 0]
+        @starting_point = options.fetch(:starting_point, Coordinates[0, 0])
       end
 
       def [] coordinates
