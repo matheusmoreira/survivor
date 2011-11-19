@@ -39,4 +39,8 @@ end
 
 task :clean => 'gem:clean'
 
-task :default => [ 'gem:install', :clean ]
+task :run => [ 'gem:install', :clean ] do
+  system 'survivor'
+end
+
+task :default => :run
