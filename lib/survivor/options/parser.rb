@@ -1,3 +1,4 @@
+require 'survivor/core_ext/kernel'
 require 'survivor/version'
 require 'optparse'
 
@@ -7,7 +8,7 @@ module Survivor
 
       def initialize options
         @option_parser = OptionParser.new do |parser|
-          parser.instance_eval do
+          with parser do
             on '--dev', 'Enable development mode' do
               options.enable_development_mode
             end

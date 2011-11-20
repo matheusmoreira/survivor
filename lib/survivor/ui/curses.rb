@@ -1,3 +1,4 @@
+require 'survivor/core_ext/kernel'
 require 'curses'
 
 module Survivor
@@ -42,7 +43,7 @@ module Survivor
       private
 
       def curses &block
-        ::Curses.tap { |curses| curses.instance_eval &block if block }
+        ::Curses.tap { |curses| with(curses, &block) if block }
       end
 
       @@key_map = {
