@@ -1,3 +1,4 @@
+require 'survivor/core_ext/hash'
 require 'survivor/game/map/coordinates'
 require 'survivor/game/map/custom_yaml_format'
 
@@ -10,7 +11,7 @@ module Survivor
       attr_accessor :starting_point
 
       def initialize options = {}
-        options.merge!(options) { |key, value| value.abs if value.respond_to? :abs }
+        options.map! { |value| value.abs if value.respond_to? :abs }
         @map = Hash.new(options.fetch(:default_tile, nil))
         0.upto(options.fetch(:lines, 0)) do |y|
           0.upto(options.fetch(:columns, 0)) do |x|
@@ -71,7 +72,7 @@ module Survivor
 
       def area_around coordinates, reach = {}
         cx, cy = *coordinates
-        reach.merge!(reach) { |key, value| value.abs if value.respond_to? :abs }
+        reach.map! { |value| value.abs if value.respond_to? :abs }
         default = +(reach.fetch(:default, 1))
         up      = +(reach.fetch(:up,      default))
         down    = -(reach.fetch(:down,    default))
