@@ -5,8 +5,8 @@ module Survivor
     class Creature
       class Character < Creature
 
-        def initialize game
-          super game, '@'
+        def initialize
+          super '@'
         end
 
       end
