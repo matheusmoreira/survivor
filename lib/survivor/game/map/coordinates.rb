@@ -19,8 +19,12 @@ module Survivor
           @x, @y = x, y
         end
 
+        def to_a
+          [x, y]
+        end
+
         def ==(coordinates)
-          self.x == coordinates.x and self.y == coordinates.y
+          to_a == coordinates.to_a
         end
 
         alias :eql? :==
@@ -28,10 +32,6 @@ module Survivor
 
         def hash
           to_a.hash
-        end
-
-        def to_a
-          [x, y]
         end
 
         alias :to_ary   :to_a
