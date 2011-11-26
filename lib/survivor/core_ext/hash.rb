@@ -10,6 +10,11 @@ module Survivor
         map! { |value| yield value rescue value }
       end
 
+      def cache(key, &block)
+        if self[key].nil? then self[key] = block.call end
+        self[key]
+      end
+
     end
   end
 end
