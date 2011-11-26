@@ -1,13 +1,19 @@
+require 'survivor/core_ext/hash'
+
 module Survivor
   class Game
     class Map
       class Coordinates
 
         class << self
-          alias :[] :new
+          attr_reader :cache
         end
 
         attr_reader :x, :y
+
+        def self.[](*args)
+          (@cache ||= {}).cache(args) { new(*args) }
+        end
 
         def initialize x = 0, y = 0
           @x, @y = x, y
