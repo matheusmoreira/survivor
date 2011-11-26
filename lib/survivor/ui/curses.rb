@@ -29,7 +29,7 @@ module Survivor
         curses.close_screen
       end
 
-      def display game
+      def display(game)
         curses.clear
         draw_map game.map
         draw_creature game.character
@@ -42,7 +42,7 @@ module Survivor
 
       private
 
-      def curses &block
+      def curses(&block)
         ::Curses.tap { |curses| with(curses, &block) if block }
       end
 
@@ -57,7 +57,7 @@ module Survivor
         @@key_map[char] = char.to_sym if char.ascii_only?
       end
 
-      def translate_key curses_key
+      def translate_key(curses_key)
         @@key_map[curses_key]
       end
 
@@ -69,11 +69,11 @@ module Survivor
         end
       end
 
-      def translate_color color
+      def translate_color(color)
         ::Curses.color_pair @@color_map[color]
       end
 
-      def write string, line, column, color = nil
+      def write(string, line, column, color = nil)
         curses do
           setpos line, column
           attron color if color and has_colors?
@@ -81,7 +81,7 @@ module Survivor
         end
       end
 
-      def draw_map map
+      def draw_map(map)
         map.each_with_coordinates do |tile, (column, line)|
           write tile,
                 normalized(line), column,
@@ -89,13 +89,13 @@ module Survivor
         end
       end
 
-      def draw_creature creature
+      def draw_creature(creature)
         write creature.char,
               normalized(creature.y), creature.x,
               translate_color(creature.color) if creature
       end
 
-      def normalized line
+      def normalized(line)
         curses.lines - line - 1
       end
 

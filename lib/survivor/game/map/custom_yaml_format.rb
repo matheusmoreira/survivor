@@ -9,17 +9,17 @@ module Survivor
     class Map
       class CustomYamlFormat
 
-        def self.save map, filename
+        def self.save(map, filename)
           File.open(filename, 'w') do |file|
             file.write custom_structure_for(map).to_yaml
           end
         end
 
-        def self.from_file filename
+        def self.from_file(filename)
           from_yaml File.open(filename) { |file| YAML::load file }
         end
 
-        def self.from_yaml string
+        def self.from_yaml(string)
           survivor = string['survivor']
           version = survivor['version']
           unless Survivor::Version == version
@@ -30,7 +30,7 @@ module Survivor
 
         private
 
-        def self.build_map map_hash
+        def self.build_map(map_hash)
           tiles = map_hash['tiles']
           Map.new.tap do |map|
             map_hash['data'].split("\n").tap do |lines|
@@ -52,7 +52,7 @@ module Survivor
           end
         end
 
-        def self.custom_structure_for map
+        def self.custom_structure_for(map)
           {}.tap do |data|
             (data['survivor'] = {}).tap do |survivor|
               survivor['version'] = Survivor::Version.to_s

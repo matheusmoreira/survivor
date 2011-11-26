@@ -10,7 +10,7 @@ module Survivor
 
       attr_accessor :starting_point
 
-      def initialize options = {}
+      def initialize(options = {})
         options.try_map!(&:abs)
         @map = Hash.new(options.fetch(:default_tile, nil))
         0.upto(options.fetch(:lines, 0)) do |y|
@@ -22,11 +22,11 @@ module Survivor
         @starting_point = options.fetch(:starting_point, Coordinates[0, 0])
       end
 
-      def [] coordinates
+      def [](coordinates)
         @map[coordinates]
       end
 
-      def []= coordinates, value
+      def []=(coordinates, value)
         @map[coordinates] = value
       end
 
@@ -70,7 +70,7 @@ module Survivor
         end
       end
 
-      def area_around coordinates, reach = {}
+      def area_around(coordinates, reach = {})
         cx, cy = *coordinates
         reach.try_map!(&:abs)
         default = +(reach.fetch(:default, 1))
@@ -101,13 +101,13 @@ module Survivor
         end
       end
 
-      def self.load filename
+      def self.load(filename)
         raise filename.prepend("Map not found - ") unless File.file? filename
         raise filename.prepend("Map not readable - ") unless File.readable? filename
         CustomYamlFormat.from_file filename
       end
 
-      def save filename
+      def save(filename)
         CustomYamlFormat.save self, filename
       end
 

@@ -6,7 +6,7 @@ module Survivor
   class Options
     class Parser
 
-      def initialize options
+      def initialize(options)
         @option_parser = OptionParser.new do |parser|
           with parser do
             on '--dev', 'Enable development mode' do

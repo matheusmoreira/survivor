@@ -9,7 +9,7 @@ module Survivor
 
     attr_reader :character, :map
 
-    def initialize options
+    def initialize(options)
       @map = Map.load(options.map_location)
       @character = Creature::Character.new.tap do |character|
         character.coordinates = map.starting_point
@@ -31,7 +31,7 @@ module Survivor
       end
     end
 
-    def handle input
+    def handle(input)
       case input
         when :q     then exit
         when :up    then Logic::Movement.move_up    character, map

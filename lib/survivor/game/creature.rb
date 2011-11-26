@@ -7,16 +7,16 @@ module Survivor
       attr_accessor :coordinates
       attr_reader   :char, :color
 
-      def initialize char, color = :white
+      def initialize(char, color = :white)
         @char, @color = char, color
         self.coordinates = Map::Coordinates.new
       end
 
-      def x= value
+      def x=(value)
         self.coordinates = Map::Coordinates[value, y]
       end
 
-      def y= value
+      def y=(value)
         self.coordinates = Map::Coordinates[x, value]
       end
 

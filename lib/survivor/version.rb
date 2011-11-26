@@ -8,7 +8,7 @@ module Survivor
 
     STRING = [ MAJOR, MINOR, PATCH, BUILD ].compact.join '.'
 
-    def self.== string
+    def self.==(string)
       STRING == string
     end
 

@@ -5,7 +5,7 @@ module Survivor
 
         attr_reader :char, :color
 
-        def initialize string, color = :white, passable = true
+        def initialize(string, color = :white, passable = true)
           @char = string.chars.first
           @color, @passable = color, passable
         end
@@ -21,7 +21,7 @@ module Survivor
         alias :to_ary   :to_a
         alias :to_array :to_a
 
-        def == tile
+        def ==(tile)
           self.to_a == tile.to_a
         end
 

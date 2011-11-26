@@ -4,7 +4,7 @@ require 'pathname'
 module Survivor
   class Options
 
-    def initialize options = {}
+    def initialize(options = {})
       @options = options
     end
 

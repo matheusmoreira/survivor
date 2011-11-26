@@ -15,11 +15,11 @@ module Survivor
           (@cache ||= {}).cache(args) { new(*args) }
         end
 
-        def initialize x = 0, y = 0
+        def initialize(x = 0, y = 0)
           @x, @y = x, y
         end
 
-        def == coordinates
+        def ==(coordinates)
           self.x == coordinates.x and self.y == coordinates.y
         end
 

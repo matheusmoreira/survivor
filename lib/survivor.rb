@@ -3,7 +3,7 @@ require 'survivor/options'
 
 module Survivor
 
-  def self.run options = Options.new
+  def self.run(options = Options.new)
     Survivor::Game.new(options).run
   end
 
@@ -15,7 +15,7 @@ module Survivor
     File.join root, 'maps'
   end
 
-  def self.map filename
+  def self.map(filename)
     File.join maps, filename
   end
 
