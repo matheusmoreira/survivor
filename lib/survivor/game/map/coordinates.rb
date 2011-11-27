@@ -12,7 +12,7 @@ module Survivor
         attr_reader :x, :y
 
         def self.[](*args)
-          (@cache ||= {}).cache(args) { new(*args) }
+          (@cache ||= Hash.new { |cache, args| cache[args] = new(*args) })[args]
         end
 
         def initialize(x = 0, y = 0)
