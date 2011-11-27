@@ -21,29 +21,81 @@ module Survivor
             end
           end
           noecho
-          stdscr.keypad true
+          cbreak
         end
+        create_windows
       end
 
       def close
+        close_windows
         curses.close_screen
       end
 
       def display(game)
-        curses.clear
+        clear_all
+        draw_window_borders
         draw_map game.map
         draw_creature game.character
-        curses.refresh
+        refresh_all
       end
 
       def input
-        translate_key ::Curses.getch
+        translate_key game_window.getch
       end
 
       private
 
       def curses(&block)
         ::Curses.tap { |curses| with(curses, &block) if block }
+      end
+
+      def game_border_window
+        @@game_border_window
+      end
+
+      def game_window
+        @@game_window
+      end
+
+      def border_windows
+        [ game_border_window ]
+      end
+
+      def content_windows
+        [ game_window ]
+      end
+
+      def windows
+        border_windows + content_windows
+      end
+
+      def create_windows
+        @@game_border_window = curses::Window.new(curses.lines, curses.cols, 0, 0)
+        @@game_window = curses::Window.new(game_border_window.maxy - 2,
+                                           game_border_window.maxx - 2,
+                                           game_border_window.begy + 1,
+                                           game_border_window.begx + 1)
+        windows.each do |window|
+          [ [ :keypad, true ], [ :scrollok, true ] ].each do |args|
+            window.send *args
+          end
+        end
+      end
+
+      def close_windows
+        windows.each &:close
+      end
+
+      def clear_all
+        windows.each &:clear
+      end
+
+      def refresh_all
+        windows.each &:refresh
+      end
+
+      def draw_window_borders
+        border_windows.each { |window| window.box '|', '-' }
       end
 
       @@key_map = {
@@ -73,30 +125,30 @@ module Survivor
         ::Curses.color_pair @@color_map[color]
       end
 
-      def write(string, line, column, color = nil)
-        curses do
+      def write_on(window, string, line, column, color = nil)
+        with window do
           setpos line, column
-          attron color if color and has_colors?
+          attron color if color
           addstr string.to_s
         end
       end
 
       def draw_map(map)
         map.each_with_coordinates do |tile, (column, line)|
-          write tile,
-                normalized(line), column,
-                translate_color(tile.color) if tile
+          write_on game_window, tile,
+                                normalized(line), column,
+                                translate_color(tile.color) if tile
         end
       end
 
       def draw_creature(creature)
-        write creature.char,
-              normalized(creature.y), creature.x,
-              translate_color(creature.color) if creature
+        write_on game_window, creature.char,
+                              normalized(creature.y), creature.x,
+                              translate_color(creature.color) if creature
       end
 
-      def normalized(line)
-        curses.lines - line - 1
+      def normalized(line, window = game_window)
+        window.maxy - line - 1
       end
 
     end
