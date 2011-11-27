@@ -36,11 +36,20 @@ module Survivor
         draw_window_borders
         draw_map game.map
         draw_creature game.character
+        write_messages
         refresh_all
       end
 
       def input
         translate_key game_window.getch
+      end
+
+      def messages
+        @@messages ||= []
+      end
+
+      def message(str)
+        messages << str.to_s
       end
 
       private
@@ -57,12 +66,20 @@ module Survivor
         @@game_window
       end
 
+      def messages_border_window
+        @@messages_border_window
+      end
+
+      def messages_window
+        @@messages_window
+      end
+
       def border_windows
-        [ game_border_window ]
+        [ game_border_window, messages_border_window ]
       end
 
       def content_windows
-        [ game_window ]
+        [ game_window, messages_window ]
       end
 
       def windows
@@ -74,8 +91,12 @@ module Survivor
       end
 
       def create_windows
-        @@game_border_window = curses::Window.new(curses.lines, curses.cols, 0, 0)
+        height = (curses.lines * 3 / 10).to_i
+        width = curses.cols
+        @@game_border_window = curses::Window.new(curses.lines - height, width, 0, 0)
         @@game_window = curses::Window.new *inside_of(game_border_window)
+        @@messages_border_window = curses::Window.new(height, width, game_border_window.maxy, 0)
+        @@messages_window = curses::Window.new *inside_of(messages_border_window)
         windows.each do |window|
           [ [ :keypad, true ], [ :scrollok, true ] ].each do |args|
             window.send *args
@@ -146,6 +167,12 @@ module Survivor
         write_on game_window, creature.char,
                               normalized(creature.y), creature.x,
                               translate_color(creature.color) if creature
+      end
+
+      def write_messages
+        messages.last(messages_window.maxy).each do |message|
+          messages_window.addstr "#{message}\n"
+        end if messages and not messages.empty?
       end
 
       def normalized(line, window = game_window)
