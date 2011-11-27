@@ -69,12 +69,13 @@ module Survivor
         border_windows + content_windows
       end
 
+      def inside_of(window)
+        [ window.maxy - 2, window.maxx - 2, window.begy + 1, window.begx + 1 ]
+      end
+
       def create_windows
         @@game_border_window = curses::Window.new(curses.lines, curses.cols, 0, 0)
-        @@game_window = curses::Window.new(game_border_window.maxy - 2,
-                                           game_border_window.maxx - 2,
-                                           game_border_window.begy + 1,
-                                           game_border_window.begx + 1)
+        @@game_window = curses::Window.new *inside_of(game_border_window)
         windows.each do |window|
           [ [ :keypad, true ], [ :scrollok, true ] ].each do |args|
             window.send *args
