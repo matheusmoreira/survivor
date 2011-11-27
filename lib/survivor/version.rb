@@ -4,7 +4,7 @@ module Survivor
     MAJOR = 0
     MINOR = 1
     PATCH = 0
-    BUILD = 'alpha'
+    BUILD = 'alpha2'
 
     STRING = [ MAJOR, MINOR, PATCH, BUILD ].compact.join '.'
 
