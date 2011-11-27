@@ -26,7 +26,9 @@ module Survivor
       UI.run do |ui|
         loop do
           ui.display self
-          handle ui.input
+          handle ui.input do |input|
+            ui.message input
+          end
         end
       end
     end
@@ -38,6 +40,7 @@ module Survivor
         when :down  then Logic::Movement.move_down  character, map
         when :left  then Logic::Movement.move_left  character, map
         when :right then Logic::Movement.move_right character, map
+        else yield input
       end
     end
 
