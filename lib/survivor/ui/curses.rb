@@ -53,6 +53,8 @@ module Survivor
         messages << str.to_s
       end
 
+      alias :msg :message
+
       private
 
       def curses(&block)
