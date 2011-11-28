@@ -1,4 +1,5 @@
 require 'survivor/core_ext/kernel'
+require 'survivor/ui/curses/window'
 require 'curses'
 
 module Survivor
@@ -41,7 +42,7 @@ module Survivor
       end
 
       def input
-        translate_key game_window.getch
+        translate_key game_window.input
       end
 
       def messages
@@ -58,50 +59,25 @@ module Survivor
         ::Curses.tap { |curses| with(curses, &block) if block }
       end
 
-      def game_border_window
-        @@game_border_window
-      end
-
       def game_window
         @@game_window
-      end
-
-      def messages_border_window
-        @@messages_border_window
       end
 
       def messages_window
         @@messages_window
       end
 
-      def border_windows
-        [ game_border_window, messages_border_window ]
-      end
-
-      def content_windows
+      def windows
         [ game_window, messages_window ]
       end
 
-      def windows
-        border_windows + content_windows
-      end
-
-      def inside_of(window)
-        [ window.maxy - 2, window.maxx - 2, window.begy + 1, window.begx + 1 ]
-      end
-
       def create_windows
-        height = (curses.lines * 3 / 10).to_i
+        lines = curses.lines
+        height = (lines * 3 / 10).to_i
         width = curses.cols
-        @@game_border_window = curses::Window.new(curses.lines - height, width, 0, 0)
-        @@game_window = curses::Window.new *inside_of(game_border_window)
-        @@messages_border_window = curses::Window.new(height, width, game_border_window.maxy, 0)
-        @@messages_window = curses::Window.new *inside_of(messages_border_window)
-        windows.each do |window|
-          [ [ :keypad, true ], [ :scrollok, true ] ].each do |args|
-            window.send *args
-          end
-        end
+        borders = [ '|', '-' ]
+        @@game_window = Window.new(lines - height, width, 0, 0, *borders)
+        @@messages_window = Window.new(height, width, game_window.height, 0, *borders)
       end
 
       def close_windows
@@ -117,7 +93,7 @@ module Survivor
       end
 
       def draw_window_borders
-        border_windows.each { |window| window.box '|', '-' }
+        windows.each &:draw_borders
       end
 
       @@key_map = {
@@ -147,36 +123,28 @@ module Survivor
         ::Curses.color_pair @@color_map[color]
       end
 
-      def write_on(window, string, line, column, color = nil)
-        with window do
-          setpos line, column
-          attron color if color
-          addstr string.to_s
-        end
-      end
-
       def draw_map(map)
         map.each_with_coordinates do |tile, (column, line)|
-          write_on game_window, tile,
-                                normalized(line), column,
-                                translate_color(tile.color) if tile
+          game_window.write tile,
+                            normalized(line), column,
+                            translate_color(tile.color) if tile
         end
       end
 
       def draw_creature(creature)
-        write_on game_window, creature.char,
-                              normalized(creature.y), creature.x,
-                              translate_color(creature.color) if creature
+        game_window.write creature.char,
+                          normalized(creature.y), creature.x,
+                          translate_color(creature.color) if creature
       end
 
       def write_messages
-        messages.last(messages_window.maxy).each do |message|
-          messages_window.addstr "#{message}\n"
+        messages.last(messages_window.content_height).each do |message|
+          messages_window.write "#{message}\n"
         end if messages and not messages.empty?
       end
 
       def normalized(line, window = game_window)
-        window.maxy - line - 1
+        window.content_height - line - 1
       end
 
     end
