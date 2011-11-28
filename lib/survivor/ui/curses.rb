@@ -138,8 +138,8 @@ module Survivor
       end
 
       def write_messages
-        messages.last(messages_window.content_height).each do |message|
-          messages_window.write "#{message}\n"
+        messages.each do |message|
+          messages_window.write message
         end if messages and not messages.empty?
       end
 
