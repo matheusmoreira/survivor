@@ -1,6 +1,6 @@
 ---
 survivor:
-  version: 0.1.0.alpha
+  version: 0.1.0.alpha2
   map:
     starting point:
       x: 10
