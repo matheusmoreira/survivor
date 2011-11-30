@@ -23,6 +23,7 @@ module Survivor
           end
           noecho
           cbreak
+          curs_set 0
         end
         create_windows
       end
