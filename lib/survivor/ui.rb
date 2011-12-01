@@ -1,16 +1,14 @@
-require 'survivor/ui/curses'
-
 module Survivor
   module UI
 
-    extend UI::Curses
+    autoload :Curses, 'survivor/ui/curses'
 
-    def self.run
-      self.init
+    def self.run(ui = Curses)
+      ui.init
       begin
-        yield self
+        yield ui
       ensure
-        self.close
+        ui.close
       end
     end
 
