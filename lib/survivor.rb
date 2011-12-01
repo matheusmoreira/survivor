@@ -1,10 +1,18 @@
 require 'survivor/game'
 require 'survivor/options'
+require 'survivor/ui'
 
 module Survivor
 
   def self.run(options = Options.new)
-    Survivor::Game.new(options).run
+    UI.run do |ui|
+      Survivor::Game.new(options).run do |game|
+        ui.display game
+        game.handle ui.input do |input|
+          ui.message input
+        end
+      end
+    end
   end
 
   def self.root

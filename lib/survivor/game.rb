@@ -2,7 +2,6 @@ require 'survivor/game/creature/character'
 require 'survivor/game/logic/movement'
 require 'survivor/game/map'
 require 'survivor/game/map/tile'
-require 'survivor/ui'
 
 module Survivor
   class Game
@@ -17,19 +16,8 @@ module Survivor
     end
 
     def run
-      game_loop
-    end
-
-    private
-
-    def game_loop
-      UI.run do |ui|
-        loop do
-          ui.display self
-          handle ui.input do |input|
-            ui.message input
-          end
-        end
+      loop do
+        yield self
       end
     end
 
