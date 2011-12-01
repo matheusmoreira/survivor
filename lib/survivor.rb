@@ -9,7 +9,10 @@ module Survivor
       Survivor::Game.new(options).run do |game|
         ui.display game
         game.handle ui.input do |input|
-          ui.message input
+          case input
+            when :q then exit
+            else ui.message input
+          end
         end
       end
     end

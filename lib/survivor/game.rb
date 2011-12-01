@@ -23,7 +23,6 @@ module Survivor
 
     def handle(input)
       case input
-        when :q     then exit
         when :up    then Logic::Movement.move_up    character, map
         when :down  then Logic::Movement.move_down  character, map
         when :left  then Logic::Movement.move_left  character, map
